@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# (cc) sgKIM, solleo@gmail.com
+
+function Usage {
+    myname=$0
+    myname=${myname##*/}
+    cat << EOF
+${myname} runs skullstripping on T1-weighted image obtained with MP2RAGE sequence
+using BET/FSL and VBM8/SPM and subsequently feed it into FreeSurfer.
+
+Usage  : ${myname} (options) [subjectID] [T1w_filename] [inv2_filename] [(optional)SUBJECTS_DIR]
+(options)
+-1     : stops process after skullstripped "ana_brain.nii.gz"
+(arguments)
+  [subjectID]     : subject ID for FreeSurfer
+  [T1w-filename]  : filename of T1-weighted image from MP2RAGE sequence
+  [inv2-filename] : filename of the second inversion image from MP2RAGE sequence
+  [SUBJECTS_DIR]  : optionally \"subjects\" directory for FreeSurfer can be specified, otherwise it will be the current path by default
+
+Example: ${myname} -1 WN6T mp2rage_uni.nii mp2rage_inv2.nii
+
+NOTE: You need to have FSL and SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
+
+(cc) 2014, sgKIM. solleo@gmail.com
+
+EOF
+}
+
+#=====================#
+# main program starts #
+#=====================#
+if [ $# -lt 1 ]; then
+    Usage
+    exit 1
+fi
+
+nofs=0
+while getopts ":1" opt; do
+  case $opt in
+    n) nofs=1
+    ;;
+  esac 
+done
+
+echo "nofs="${nofs}
+
+sesid=$1
+t1w=$2
+inv2=$3
+if [ $# -gt 3 ]; then
+    export SUBJECTS_DIR=$4
+else
+    export SUBJECTS_DIR=`pwd`
+fi
+
+# 1. rough skullstripping using inv2
+FSLOUTPUTTYPE=NIFTI_GZ
+bet ${inv2} inv2_mask -f 0.3
+FSLOUTPUTTYPE=NIFTI
+fslmaths ${t1w} -mas inv2_mask ana
+
+## 2. fine skullstripping using VBM8: you need to have "vbm8_brainExt_exit.m" in you MATLAB path
+matlab -nodesktop -nosplash -r "vbm8_brainExt_exit('ana.nii')"
+FSLOUTPUTTYPE=NIFTI_GZ
+fslmaths p1ana -add p2ana -add p3ana -bin -mul ana.nii ana_brain
+fname=ana_brain.nii.gz
+# delete temporary files
+rm -f inv2_mask.nii.gz
+rm -f ana.nii
+rm -f p?ana.nii
+
+## 3. now running FreeSurfer
+if [ !${nofs} ]; then
+${FREESURFER_HOME}/bin/recon-all -mprage -s ${sesid} -i ${fname} -autorecon1 -noskullstrip
+cp ${SUBJECTS_DIR}/${sesid}/mri/T1.mgz ${SUBJECTS_DIR}/${sesid}/mri/brainmask.auto.mgz
+cp ${SUBJECTS_DIR}/${sesid}/mri/brainmask.auto.mgz ${SUBJECTS_DIR}/${sesid}/mri/brainmask.mgz
+${FREESURFER_HOME}/bin/recon-all -mprage -s ${sesid} -autorecon2 -autorecon3
+fi
