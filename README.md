@@ -8,7 +8,8 @@ It will use BET/FSL, VBM8/SPM8, and FreeSurfer. So you need to have them executa
 1. download the "vbm8_brainExt_exit.m" into any working MATLAB path
 2. download the "mp2rage_ss-fs" in any working bash path
 3. type "mp2rage_ss-fs" without any arguments to see the help message as below:
----
+
+```
 mp2rage_ss-fs runs skullstripping on T1-weighted image obtained with MP2RAGE sequence
 using BET/FSL and VBM8/SPM and subsequently feed it into FreeSurfer.
 
@@ -26,5 +27,5 @@ Example: mp2rage_ss-fs -1 WN6T mp2rage_uni.nii mp2rage_inv2.nii
 NOTE: You need to have FSL and SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
 
 (cc) 2014, sgKIM. solleo@gmail.com
----
+```
 
