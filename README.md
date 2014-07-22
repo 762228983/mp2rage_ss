@@ -3,7 +3,7 @@ mp2rage_ss
 
 This scripts is to do skullstripping on T1w image from the MP2RAGE sequence.
 
-0. It will use BET/FSL and VBM8/SPM8. So you need to have them executable beforehand:
+0. It will use BET/FSL and VBM8/SPM8/MATLAB. So you need to have them executable beforehand:
 ```
 source ${your_FSL}/fsl.sh
 export MATLABPATH=$MATLABPATH:${your_SPM}
