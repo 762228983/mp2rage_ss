@@ -3,19 +3,19 @@ mp2rage_ss
 
 This scripts is to do skullstripping on T1w image from the MP2RAGE sequence.
 
-0. It will use BET/FSL and VBM8/SPM8/MATLAB. So you need to have them executable beforehand:
+ 0. It will use BET/FSL and VBM8/SPM8/MATLAB. So you need to have them executable beforehand:
 ```
 source ${your_FSL}/fsl.sh
 export MATLABPATH=$MATLABPATH:${your_SPM}
 ```
 
-1. download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` or any working path
-2. set paths executable:
+ 1. download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` or any working path
+ 2. set paths executable:
 ```
 export PATH=$PATH:${your_mp2rage_ss}
 export MATLABPATH=$MATLABPATH:${your_mp2rage_ss}
 ```
-3. type "mp2rage_ss-fs" without any arguments to see the help message as below:
+ 3. type "mp2rage_ss-fs" without any arguments to see the help message as below:
 ```
 mp2rage_ss runs skullstripping on T1-weighted image obtained with MP2RAGE sequence using BET/FSL and VBM8/SPM and returning "ana_brain.nii.gz" as the final result.
 
