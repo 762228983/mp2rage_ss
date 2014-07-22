@@ -14,7 +14,7 @@ export MATLABPATH=$MATLABPATH:${your_SPM}
 export PATH=$PATH:${your_mp2rage_ss}
 export MATLABPATH=$MATLABPATH:${your_mp2rage_ss}
 ```
-2. type "mp2rage_ss-fs" without any arguments to see the help message as below:
+*2. type "mp2rage_ss-fs" without any arguments to see the help message as below:
 ```
 mp2rage_ss runs skullstripping on T1-weighted image obtained with MP2RAGE sequence using BET/FSL and VBM8/SPM and returning "ana_brain.nii.gz" as the final result.
 
