@@ -8,10 +8,10 @@ It will use BET/FSL and VBM8/SPM8/MATLAB. So you need to have them executable be
 source ${your_FSL}/fsl.sh
 ```
 
-Download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` or any working path, and set paths executable:
+Download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` so that it can be found by bash and matlab:
 ```
-export PATH=$PATH:${your_mp2rage_ss}
 export MP2RAGE_PATH=${your_mp2rage_ss}
+export PATH=${PATH}:${MP2RAGE_PATH}
 ```
 Type "mp2rage_ss-fs" without any arguments to see the help message as below:
 ```
