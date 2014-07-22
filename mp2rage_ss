@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# (cc) sgKIM, solleo@gmail.com
+
+function Usage {
+    myname=$0
+    myname=${myname##*/}
+    cat << EOF
+${myname} runs skullstripping on T1-weighted image obtained with MP2RAGE sequence using BET/FSL and VBM8/SPM and returning "ana_brain.nii.gz" as the final result.
+
+Usage  : ${myname} [T1w_filename] [inv2_filename]
+(arguments)
+  [subjectID]     : subject ID for FreeSurfer
+  [T1w-filename]  : filename of T1-weighted image from MP2RAGE sequence
+  [inv2-filename] : filename of the second inversion image from MP2RAGE sequence
+
+Example: ${myname} mp2rage_uni.nii mp2rage_inv2.nii
+
+NOTE: You need to have FSL and SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
+
+(cc) 2014, sgKIM. solleo@gmail.com
+
+EOF
+}
+
+#=====================#
+# main program starts #
+#=====================#
+if [ $# -lt 1 ]; then
+    Usage
+    exit 1
+fi
+
+t1w=$1
+inv2=$2
+
+# 1. rough skullstripping using inv2
+FSLOUTPUTTYPE=NIFTI_GZ
+bet ${inv2} inv2_mask -f 0.3
+FSLOUTPUTTYPE=NIFTI
+fslmaths ${t1w} -mas inv2_mask ana
+if [ ana.nii.gz -f ]; then gunzip ana.nii.gz; fi
+
+## 2. fine skullstripping using VBM8: you need to have "vbm8_brainExt_exit.m" in you MATLAB path
+matlab -nodesktop -nosplash -r "vbm8_brainExt_exit({'ana.nii'})"
+FSLOUTPUTTYPE=NIFTI_GZ
+fslmaths p1ana -add p2ana -add p3ana -bin -mul ana.nii ana_brain
+fname=ana_brain.nii.gz
+# delete temporary files
+rm -f inv2_mask.nii.gz
+rm -f ana.nii
+rm -f p?ana.nii
