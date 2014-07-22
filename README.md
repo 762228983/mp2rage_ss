@@ -3,7 +3,10 @@ mp2rage_ss
 
 This scripts is to do skullstripping on T1w image from the MP2RAGE sequence.
 
-It will use BET/FSL and VBM8/SPM8 So you need to have them executable beforehand.
+It will use BET/FSL and VBM8/SPM8 So you need to have them executable beforehand:
+```
+source ${your_FSL}/fsl.sh
+```
 
 1. download the "vbm8_brainExt_exit.m" into any working MATLAB path
 2. download the "mp2rage_ss" in any working bash path
