@@ -8,9 +8,11 @@ It will use BET/FSL and VBM8/SPM8 So you need to have them executable beforehand
 source ${your_FSL}/fsl.sh
 ```
 
-1. download the "vbm8_brainExt_exit.m" into any working MATLAB path
-2. download the "mp2rage_ss" in any working bash path
-3. type "mp2rage_ss-fs" without any arguments to see the help message as below:
+1. download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` or any working path:
+```
+export MATLABPATH=$MATLABPATH${MATLABPATH:+:}/${your_mp2rage_ss}
+```
+2. type "mp2rage_ss-fs" without any arguments to see the help message as below:
 
 ```
 mp2rage_ss runs skullstripping on T1-weighted image obtained with MP2RAGE sequence using BET/FSL and VBM8/SPM and returning "ana_brain.nii.gz" as the final result.
