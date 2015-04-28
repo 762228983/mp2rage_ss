@@ -6,7 +6,7 @@
 
 function vbm8_brainExt_exit (filenames)
 
-spm pet
+spm_jobman('initcfg');
 estwrite=[];
 
 % Data to process
