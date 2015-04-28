@@ -2,7 +2,7 @@ mp2rage_ss
 =============
 runs skullstripping on MP2RAGE images with the uniform tissue contrast image (uni_fname)  and the 2nd inversion image (inv2_fname) by
 
-[1] multiplying uni and inv2 (*)
+[1] multiplying uni and inv2
 [2] and using skull-stripping using VBM8/SPM
 
 and returns skull-stripped image (uni_fname+"_mp2brain.nii" by default)
@@ -13,7 +13,7 @@ Usage  : ${myname} [uni_filename] [inv2_filename] ([output_filename])
   [inv2-filename] : filename of the second inversion image from MP2RAGE sequence
   [output]        : (optional) output filename
 ````
-* Ref: Fujimoto et al, 2014, NeuroImage. 
+Reference: Fujimoto et al, 2014, NeuroImage. 
 
 Example: ${myname} mp2rage_uni.nii mp2rage_inv2.nii
 
