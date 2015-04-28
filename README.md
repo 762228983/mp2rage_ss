@@ -1,32 +1,23 @@
 mp2rage_ss
 =============
+runs skullstripping on MP2RAGE images with the uniform tissue contrast image (uni_fname)  and the 2nd inversion image (inv2_fname) by
 
-This scripts is to do skullstripping on T1w image from the MP2RAGE sequence.
+[1] multiplying uni and inv2 (*)
+[2] and using skull-stripping using VBM8/SPM
 
-It will use BET/FSL and VBM8/SPM8/MATLAB. So you need to have them executable beforehand:
-```
-source ${your_FSL}/fsl.sh
-```
-
-Download the "vbm8_brainExt_exit.m" and "mp2rage_ss" into a directory `${your_mp2rage_ss}` so that they can be found by bash and matlab:
-```
-export MP2RAGE_PATH=${your_mp2rage_ss}
-export PATH=${PATH}:${MP2RAGE_PATH}
-```
-Type "mp2rage_ss-fs" without any arguments to see the help message as below:
-```
-mp2rage_ss runs skullstripping on T1-weighted image obtained with MP2RAGE sequence using BET/FSL and VBM8/SPM and returning "ana_brain.nii.gz" as the final result.
-
-Usage  : mp2rage_ss [T1w_filename] [inv2_filename]
+and returns skull-stripped image (uni_fname+"_mp2brain.nii" by default)
+````
+Usage  : ${myname} [uni_filename] [inv2_filename] ([output_filename])
 (arguments)
-  [subjectID]     : subject ID for FreeSurfer
-  [T1w-filename]  : filename of T1-weighted image from MP2RAGE sequence
+  [uni-filename]  : filename of T1-weighted image from MP2RAGE sequence
   [inv2-filename] : filename of the second inversion image from MP2RAGE sequence
+  [output]        : (optional) output filename
+````
+* Ref: Fujimoto et al, 2014, NeuroImage. 
 
-Example: mp2rage_ss mp2rage_uni.nii mp2rage_inv2.nii
+Example: ${myname} mp2rage_uni.nii mp2rage_inv2.nii
 
-NOTE: You need to have FSL and SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
+NOTE: You need to have SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
 
-(cc) 2014, sgKIM. solleo@gmail.com
-```
-
+(cc) 2014, 2015, sgKIM. solleo@gmail.com
+(cc) 2015, sgKIM. solleo@gmail.com

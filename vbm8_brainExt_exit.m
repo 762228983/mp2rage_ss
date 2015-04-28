@@ -11,12 +11,13 @@ estwrite=[];
 
 % Data to process
 for i=1:numel(filenames)
-estwrite.data{i} = [filenames{i},',1'];
+	estwrite.data{i} = [filenames{i},',1'];
 end
 
 % Estimation options
 %=======================================================================
-estwrite.opts.tpm       = {fullfile(spm('dir'),'toolbox','Seg','TPM.nii')}; % TPM.nii
+[spmpath,~,~] = fileparts(which('spm'));
+estwrite.opts.tpm       = {fullfile(spmpath,'toolbox','Seg','TPM.nii')}; % TPM.nii
 estwrite.opts.ngaus     = [2 2 2 3 4 2];  % Gaussians per class
 estwrite.opts.affreg    = 'mni';    % Affine regularisation
 estwrite.opts.warpreg   = 4;      % Warping regularisation
