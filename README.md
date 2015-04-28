@@ -9,7 +9,7 @@ and returns skull-stripped image (uni_fname+"_mp2brain.nii" by default)
 ````
 Usage  : ${myname} [uni_filename] [inv2_filename] ([output_filename])
 (arguments)
-  [uni-filename]  : filename of T1-weighted image from MP2RAGE sequence
+  [uni-filename]  : filename of uniform contrast image from MP2RAGE sequence
   [inv2-filename] : filename of the second inversion image from MP2RAGE sequence
   [output]        : (optional) output filename
 ````
@@ -19,5 +19,4 @@ Example: ${myname} mp2rage_uni.nii mp2rage_inv2.nii
 
 NOTE: You need to have SPM executable and "vbm8_brainExt_exit.m" in your MATLAB working path.
 
-(cc) 2014, 2015, sgKIM. solleo@gmail.com
 (cc) 2015, sgKIM. solleo@gmail.com
