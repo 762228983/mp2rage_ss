@@ -41,12 +41,12 @@ inv2=$2
 uni=`mynifti $1`
 inv2=`mynifti $2`
 mkdir .temp$$
-cp $uni ./.temp$$/`imglob $uni`.nii
-cp $inv2 .temp$$/`imglob $inv2`.nii
+cp ${uni} ./.temp$$/`imglob ${uni}`.nii
+cp ${inv2} .temp$$/`imglob ${inv2}`.nii
 cd ./.temp$$
 
 if [ ! $3 ]; then
-    output=`imglob $uni`_mp2brain.nii
+    output=`imglob ${uni}`_mp2brain.nii
 else
     output=$3
 fi
@@ -59,7 +59,7 @@ fslmaths ${uni} -mul ${inv2} mp2.nii -odt float
 satlab8 -nodesktop -nosplash -r "vbm8_brainExt_exit({'mp2.nii'});"
 
 # 3. Apply the brain mask to the unbiased uniform image:
-fslmaths p1mp2 -add p2mp2 -add p3mp2 -bin -mul $uni ${output}
+fslmaths p1mp2 -add p2mp2 -add p3mp2 -bin -mul ${uni} ${output}
 
 # 5. return results and remove the temporary directory
 cp ${output} ../
